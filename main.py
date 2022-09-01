@@ -1,8 +1,6 @@
 from bs4 import BeautifulSoup
-from threading import Thread
 import requests
 import json
-import time
 
 
 class Rolimons:
