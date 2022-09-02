@@ -34,7 +34,7 @@ for leak in Rolimons.leaks():
 `new_limiteds()` Fetches a list of recent items that have become limiteds. <br/>
 Example:
 ```py
-Rolimons.new_limiteds()
+Rolimons.new_limiteds(limit=10)
 ```
 > `[{'name': Valkrie Helm, 'rap': 100000}, ...]` <br/>
 
@@ -45,4 +45,18 @@ Rolimons.get_trade_ads()
 ```
 > `[{'user': John Doe, 'offering': [<Rolimons.Item Object>, ...], 'requesting': [<Rolimons.Item Object>]}, ...]`
 
-Note: If a trade does not have a request for items, it will switch out the `request` key with the `tag` key.
+Note: If a trade does not have a request for items, it will switch out the `request` key with the `tag` key. <br/>
+`get_market_activity()` Fetches a list of recently sold items tracked by Rolimons <br/>
+Example:
+```py
+for item in Rolimons.get_market_activity():
+  print(item['item'])
+  print(item['old_rap'])
+  print(item['new_rap'])
+  print(item['timestamp'])
+```
+> ```
+> <Rolimons.Item Object>
+> 1000
+> 1200
+> 123456
