@@ -62,7 +62,6 @@ class Rolimons:
     return data
 
   def get_value_changes():
-    # depricated
     request = requests.get('https://www.rolimons.com/valuechanges')
     soup = BeautifulSoup(request.text, 'html.parser')
     raw = soup.find_all('span', attrs={'class': 'change_stat text-light text-truncate'})
@@ -124,24 +123,14 @@ class Rolimons:
       trade_ad_count = Rolimons.get_index(request.text, '"trade_ad_count":', ',')
       inventory = []
       rap = 0
+
+      raw_data = requests.get('https://www.rolimons.com/itemapi/itemdetails').json()['items']
       request = requests.get(f'https://inventory.roblox.com/v1/users/{self.id}/assets/collectibles?limit=100').json()
       for item in request['data']:
         rap += item['recentAveragePrice']
-        inventory.append(item['assetId'])
+        inventory.append(Rolimons.item(item['assetId'], raw=raw_data))
         
       return value, rap, inventory, trade_ad_count
-
-    def get_inventory(self):
-      # depricated until Rolimon releases endpoint
-      request = requests.get(f'https://www.rolimons.com/api/playerassets/{self.id}')
-      raw_data = requests.get('https://www.rolimons.com/itemapi/itemdetails').json()['items']
-      data = []
-      for key in request:
-        if len(request[key] == 1): 
-          data.append(Rolimons.Item(key, raw=raw_data))
-        else:
-          data.extend(Rolimons.Item(key) for item in request[key])
-      return data
 
   class Item():
     def __init__(self, id, raw=None):
