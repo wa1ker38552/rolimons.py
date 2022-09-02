@@ -4,7 +4,7 @@ import json
 
 
 class Rolimons:
-  # essential functions
+  # essential functions to be packaged in class
   def get_inverse_index(response, i1, i2):
     end = response.index(i1)
     x = end
@@ -61,6 +61,14 @@ class Rolimons:
       })
     return data
 
+  def get_value_changes():
+    # depricated
+    request = requests.get('https://www.rolimons.com/valuechanges')
+    soup = BeautifulSoup(request.text, 'html.parser')
+    raw = soup.find_all('span', attrs={'class': 'change_stat text-light text-truncate'})
+    print(raw)
+    for item in raw: print(item.get_text())
+
   def get_trade_ads(limit=50):
     request = requests.get('https://www.rolimons.com/tradeadsapi/getrecentads').json()
     raw = request['trade_ads']
@@ -79,6 +87,20 @@ class Rolimons:
       except KeyError:
         pre['tags'] = raw[i][5]['tags']
       data.append(pre)
+    return data
+
+  def get_market_activity():
+    raw_data = requests.get('https://www.rolimons.com/itemapi/itemdetails').json()['items']
+    request = requests.get('https://www.rolimons.com/api/activity')
+
+    data = []
+    for item in request.json()['activities']:
+      data.append({
+        'item': Rolimons.Item(item[2], raw=raw_data),
+        'old_rap': item[3],
+        'new_rap': item[4],
+        'timestamp': item[0]
+      })
     return data
   
   class User:
@@ -108,6 +130,18 @@ class Rolimons:
         inventory.append(item['assetId'])
         
       return value, rap, inventory, trade_ad_count
+
+    def get_inventory(self):
+      # depricated until Rolimon releases endpoint
+      request = requests.get(f'https://www.rolimons.com/api/playerassets/{self.id}')
+      raw_data = requests.get('https://www.rolimons.com/itemapi/itemdetails').json()['items']
+      data = []
+      for key in request:
+        if len(request[key] == 1): 
+          data.append(Rolimons.Item(key, raw=raw_data))
+        else:
+          data.extend(Rolimons.Item(key) for item in request[key])
+      return data
 
   class Item():
     def __init__(self, id, raw=None):
