@@ -61,13 +61,6 @@ class Rolimons:
       })
     return data
 
-  def get_value_changes():
-    request = requests.get('https://www.rolimons.com/valuechanges')
-    soup = BeautifulSoup(request.text, 'html.parser')
-    raw = soup.find_all('span', attrs={'class': 'change_stat text-light text-truncate'})
-    print(raw)
-    for item in raw: print(item.get_text())
-
   def get_trade_ads(limit=50):
     request = requests.get('https://www.rolimons.com/tradeadsapi/getrecentads').json()
     raw = request['trade_ads']
