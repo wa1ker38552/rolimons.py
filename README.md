@@ -60,3 +60,31 @@ for item in Rolimons.get_market_activity():
 > 1000
 > 1200
 > 123456
+
+**User** <br/>
+Attributes: <br/>
+`self.id` User id <br/>
+`self.username` User name <br/>
+`self.value` Total value <br/>
+`self.rap` Total rap <br/>
+`self.trade_ads` Total trade ads sent <br/>
+`self.inventory` All items in users inventory in `<Rolimons.Item Object>` <br/>
+
+Functions defined: <br/>
+`get_metadata()` Refreshes all data for the specified user. This includes, rap, value, inventory, and trade_ads <br/>
+Example:
+```py
+user = Rolimons.User('Roblox')
+user.rap
+
+user.get_metadata()
+user.rap
+```
+> `10000`
+> `10001`
+
+`query_user(username)` Searches Roblox to match username to an id <br/>
+Note: This function cannot be used on the client end.
+
+**Item** <br/>
+Attributes: <br/>
