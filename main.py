@@ -118,7 +118,6 @@ class Rolimons:
   
     def get_metadata(self):
       request = requests.get(f'https://www.rolimons.com/player/{self.id}')
-      with open('raw.txt','w') as file: file.write(request.text)
       value = Rolimons.get_inverse_index(request.text, '],"rap":', ',')
       trade_ad_count = Rolimons.get_index(request.text, '"trade_ad_count":', ',')
       inventory = []
