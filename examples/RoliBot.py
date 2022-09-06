@@ -1,5 +1,5 @@
 from discord.ext import commands
-from rolimons import Rolimons
+import rolimons
 import discord
 
 client = commands.Bot(command_prefix=';', help_command=None)
@@ -10,7 +10,7 @@ async def on_ready():
 
 @client.commands()
 async def player(ctx, username):
-  user = Rolimons.User(username=username)
+  user = rolimons.User(username=username)
   embed = discord.Embed(title=user.username)
   embed.description = f'''
   RAP: {user.rap}
@@ -22,7 +22,7 @@ async def player(ctx, username):
 
 @client.commands()
 async def item(ctx, id):
-  item = Rolimons.Items(id)
+  item = rolimons.Items(id)
   embed = discord.Embed(title=item.name)
   embed.description = f'''
   RAP: {item.rap}
