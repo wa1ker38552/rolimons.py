@@ -61,8 +61,11 @@ for item in Rolimons.get_market_activity():
 > 1200
 > 123456
 
-**User** <br/>
-Attributes: <br/>
+**Rolimons.User** <br/>
+Parameters: <br/> <br/> 
+You can search for a user by id or by name when passing it as a parameter. To search for id, use `Rolimons.User(id=12345)` and to search for name, use `Rolimons.User(username='Roblox')`
+
+Attributes: <br/> <br/> 
 `self.id` User id <br/>
 `self.username` User name <br/>
 `self.value` Total value <br/>
@@ -70,7 +73,7 @@ Attributes: <br/>
 `self.trade_ads` Total trade ads sent <br/>
 `self.inventory` All items in users inventory in `<Rolimons.Item Object>` <br/>
 
-Functions defined: <br/>
+Functions defined: <br/> <br/> 
 `get_metadata()` Refreshes all data for the specified user. This includes, rap, value, inventory, and trade_ads <br/>
 Example:
 ```py
@@ -80,11 +83,43 @@ user.rap
 user.get_metadata()
 user.rap
 ```
-> `10000`
-> `10001`
+> ```
+> 10000
+> 10001
 
 `query_user(username)` Searches Roblox to match username to an id <br/>
 Note: This function cannot be used on the client end.
 
-**Item** <br/>
-Attributes: <br/>
+**Rolimons.Item** <br/>
+Parameters: <br/> <br/> 
+You can only search for item by id, `Rolimons.Item(12345)`. An additional parameter you can pass in is `raw` which is the raw marketplace table containing item values. This is so that you don't hit rate limits if you try to keep searching for items. You have to pass in the 'items' key from the itemtable not the entire table.
+```py
+raw_data = requests.get('https://www.rolimons.com/itemapi/itemdetails').json()['items']
+
+items = [12345, ...]
+objects = []
+for item in items:
+  objects.append(Rolimons.Item(item, raw=raw_data))
+ ```
+
+Attributes: <br/> <br/>
+`self.id` Item id <br/>
+`self.name` Item name <br/>
+`self.value` Item value <br/>
+`self.rap` Item rap <br/>
+
+Functions defined: <br/> <br/> 
+`sales_data()` Gets Rolimons sales data about item
+Example:
+```py
+for sale in Rolimons.Item(12345).sales_data():
+  print(sale['timestamp'])
+  print(sale['price'])
+  print(sale['old_rap'])
+  print(sale['new_rap'])
+```
+> ```
+> 123456
+> 1000
+> 900
+> 950
