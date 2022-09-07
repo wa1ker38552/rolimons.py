@@ -9,7 +9,7 @@ To get started, clone the repository using, `$ git clone https://github.com/wa1k
 # Documentaton
 The wrapper contains a class along with 2 subclasses to handle and organize data. These include Rolimons, Item, and User classes.
 
-**Rolimons** <br/>
+**rolimons** <br/>
 Functions defined:
 
 `leaderboard()` Fetches a list of players from the Rolimons leaderboard. <br/>
@@ -42,12 +42,12 @@ Example:
 `get_trade_ads()` Fetches a list of recent trade ads. <br/>
 Example:
 ```py
-Rolimons.get_trade_ads()
+rolimons.get_trade_ads()
 ```
-> `[{'user': John Doe, 'offering': [<Rolimons.Item Object>, ...], 'requesting': [<Rolimons.Item Object>]}, ...]`
+> `[{'user': John Doe, 'offering': [<rolimons.Item Object>, ...], 'requesting': [<rolimons.Item Object>]}, ...]`
 
 Note: If a trade does not have a request for items, it will switch out the `request` key with the `tag` key. <br/>
-`get_market_activity()` Fetches a list of recently sold items tracked by Rolimons <br/>
+`get_market_activity()` Fetches a list of recently sold items tracked by rolimons <br/>
 Example:
 ```py
 for item in rolimons.get_market_activity():
@@ -62,7 +62,7 @@ for item in rolimons.get_market_activity():
 > 1200
 > 123456
 
-**Rolimons.User** <br/>
+**rolimons.User** <br/>
 Parameters: <br/> <br/> 
 You can search for a user by id or by name when passing it as a parameter. To search for id, use `rolimons.User(id=12345)` and to search for name, use `rolimons.User(username='Roblox')`
 
@@ -91,7 +91,7 @@ user.rap
 `query_user(username)` Searches Roblox to match username to an id <br/>
 Note: This function cannot be used on the client end.
 
-**Rolimons.Item** <br/>
+**rolimons.Item** <br/>
 Parameters: <br/> <br/> 
 You can only search for item by id, `rolimons.Item(12345)`. An additional parameter you can pass in is `raw` which is the raw marketplace table containing item values. This is so that you don't hit rate limits if you try to keep searching for items. You have to pass in the 'items' key from the itemtable not the entire table.
 ```py
@@ -124,3 +124,31 @@ for sale in rolimons.Item(12345).sales_data():
 > 1000
 > 900
 > 950
+
+**rolimons.Client** <br/>
+The only parameter is your Rolimons cookie which should look something like `_ga=GA1...`
+```py
+client = rolimons.Client('cookie')
+```
+
+Attributes: <br/><br/>
+`self.token` Rolimons cookie <br/>
+`self.client` request.Session object with your Rolimons cookie in headers. Used for your own tests outside of class
+
+Functions defined: <br/><br/>
+`update_wishlist()`: Updates and overrides your Rolimons wishlist. Enter values in list format and returns request status code. <br/>
+Example:
+```py
+client = rolimons.Client('token')
+status_code = client.update_wishlist([12345, 54321])
+print(status_code)
+```
+> `200`
+`update_asking()`: Updates and overrides your asking tags on Rolimons. A dictionary with the item id as key and list of tags as values will be required as parameter returns status code<br/>
+Example:
+```py
+client = rolimons.Client('token')
+status_code = client.update_asking({12345: ['overpay', 'upgrades'], 54321': ['nft']})
+print(status_code)
+```
+> `200`
