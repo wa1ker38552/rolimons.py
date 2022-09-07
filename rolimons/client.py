@@ -22,3 +22,7 @@ class Client:
         data['assets'][i][option] = True
     request = self.client.post('https://www.rolimons.com/tradesettingsapi/updateaskinglist', json=data)
     return request.status_code
+  
+  def add_player(self, username):
+    request = self.client.post(f'https://www.rolimons.com/playerapi/addplayer?playername={username}')
+    return request.status_code
