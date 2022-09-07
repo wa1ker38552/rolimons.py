@@ -15,14 +15,14 @@ Functions defined:
 `leaderboard()` Fetches a list of players from the Rolimons leaderboard. <br/>
 Example:
 ```py
-Rolimons.leaderboard()
+rolimons.leaderboard()
 ```
 > `[{'name': Roblox, 'rank': 1, 'value': 100000, 'rap': 100000}, ...]`
 
 `leaks()` Fetches a list of recently leaked Roblox items. <br/>
 Example:
 ```py
-for leak in Rolimons.leaks():
+for leak in rolimons.leaks():
   print(leak['timestamp'])
   print(leak['name'])
   print(leak['image'])
@@ -34,7 +34,8 @@ for leak in Rolimons.leaks():
 `new_limiteds()` Fetches a list of recent items that have become limiteds. <br/>
 Example:
 ```py
-Rolimons.new_limiteds(limit=10)
+
+.new_limiteds(limit=10)
 ```
 > `[{'name': Valkrie Helm, 'rap': 100000}, ...]` <br/>
 
@@ -49,21 +50,21 @@ Note: If a trade does not have a request for items, it will switch out the `requ
 `get_market_activity()` Fetches a list of recently sold items tracked by Rolimons <br/>
 Example:
 ```py
-for item in Rolimons.get_market_activity():
+for item in rolimons.get_market_activity():
   print(item['item'])
   print(item['old_rap'])
   print(item['new_rap'])
   print(item['timestamp'])
 ```
 > ```
-> <Rolimons.Item Object>
+> <rolimons.Item Object>
 > 1000
 > 1200
 > 123456
 
 **Rolimons.User** <br/>
 Parameters: <br/> <br/> 
-You can search for a user by id or by name when passing it as a parameter. To search for id, use `Rolimons.User(id=12345)` and to search for name, use `Rolimons.User(username='Roblox')`
+You can search for a user by id or by name when passing it as a parameter. To search for id, use `rolimons.User(id=12345)` and to search for name, use `rolimons.User(username='Roblox')`
 
 Attributes: <br/> <br/> 
 `self.id` User id <br/>
@@ -71,13 +72,13 @@ Attributes: <br/> <br/>
 `self.value` Total value <br/>
 `self.rap` Total rap <br/>
 `self.trade_ads` Total trade ads sent <br/>
-`self.inventory` All items in users inventory in `<Rolimons.Item Object>` <br/>
+`self.inventory` All items in users inventory in `<rolimons.Item Object>` <br/>
 
 Functions defined: <br/> <br/> 
 `get_metadata()` Refreshes all data for the specified user. This includes, rap, value, inventory, and trade_ads <br/>
 Example:
 ```py
-user = Rolimons.User('Roblox')
+user = rolimons.User('Roblox')
 user.rap
 
 user.get_metadata()
@@ -92,14 +93,14 @@ Note: This function cannot be used on the client end.
 
 **Rolimons.Item** <br/>
 Parameters: <br/> <br/> 
-You can only search for item by id, `Rolimons.Item(12345)`. An additional parameter you can pass in is `raw` which is the raw marketplace table containing item values. This is so that you don't hit rate limits if you try to keep searching for items. You have to pass in the 'items' key from the itemtable not the entire table.
+You can only search for item by id, `rolimons.Item(12345)`. An additional parameter you can pass in is `raw` which is the raw marketplace table containing item values. This is so that you don't hit rate limits if you try to keep searching for items. You have to pass in the 'items' key from the itemtable not the entire table.
 ```py
 raw_data = requests.get('https://www.rolimons.com/itemapi/itemdetails').json()['items']
 
 items = [12345, ...]
 objects = []
 for item in items:
-  objects.append(Rolimons.Item(item, raw=raw_data))
+  objects.append(rolimons.Item(item, raw=raw_data))
  ```
 
 Attributes: <br/> <br/>
@@ -109,10 +110,10 @@ Attributes: <br/> <br/>
 `self.rap` Item rap <br/>
 
 Functions defined: <br/> <br/> 
-`sales_data()` Gets Rolimons sales data about item
+`sales_data()` Gets rolimons sales data about item
 Example:
 ```py
-for sale in Rolimons.Item(12345).sales_data():
+for sale in rolimons.Item(12345).sales_data():
   print(sale['timestamp'])
   print(sale['price'])
   print(sale['old_rap'])
