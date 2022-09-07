@@ -10,3 +10,15 @@ class Client:
     data = {'asset_ids': items}
     request = self.client.post('https://www.rolimons.com/tradesettingsapi/updatewishlist', json=data, headers={'cookie': self.token})
     return request.status_code
+  
+  def update_asking(self, items):
+    # format
+    # {item: [tags, ...]}
+      
+    data = {'assets': []}
+    for i, item in enumerate(items):
+      data['assets'].append({'id': item})
+      for option in items[item]:
+        data['assets'][i][option] = True
+    request = self.client.post('https://www.rolimons.com/tradesettingsapi/updateaskinglist', json=data)
+    return request.status_code
