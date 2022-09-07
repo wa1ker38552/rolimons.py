@@ -153,3 +153,12 @@ status_code = client.update_asking({12345: ['overpay', 'upgrades'], 54321': ['nf
 print(status_code)
 ```
 > `200`
+
+`add_player`: Adds a player to Rolimons. The only parameter is username. Returns status code <br/>
+Example:
+```py
+client = discord.Client('token')
+status_code = client.add_player('Roblox')
+print(status_code)
+```
+> `200`
