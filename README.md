@@ -144,6 +144,7 @@ status_code = client.update_wishlist([12345, 54321])
 print(status_code)
 ```
 > `200`
+
 `update_asking()`: Updates and overrides your asking tags on Rolimons. A dictionary with the item id as key and list of tags as values will be required as parameter returns status code<br/>
 Example:
 ```py
