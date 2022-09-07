@@ -1,3 +1,4 @@
+from requests_html import HTMLSession
 import rolimons
 import requests
 
@@ -15,8 +16,14 @@ class User:
     request = requests.get(f'https://users.roblox.com/v1/users/search?keyword={username}&limit=10').json()
     return request['data'][0]['id']
 
-  def get_metadata(self):
-    request = requests.get(f'https://www.rolimons.com/player/{self.id}')
+  def get_metadata(self, refresh=False):
+    # refresh javascript using HTMLSession
+    if refresh is True:
+      session = HTMLSession()
+      request = session.get(f'https://www.rolimons.com/player/{self.id}')
+    else:
+      request = requests.get(f'https://www.rolimons.com/player/{self.id}')
+      
     value = rolimons.get_inverse_index(request.text, '],"rap":', ',')
     trade_ad_count = rolimons.get_index(request.text, '"trade_ad_count":', ',')
     inventory = []
