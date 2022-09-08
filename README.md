@@ -4,7 +4,7 @@ A Python API wrapper for Rolimons.
 RoliPY is an API wrapper for Rolimons that includes several features that other wrappers for Rolimons don't include. The project is being actively maintained currently.
 
 **Getting Started** <br/>
-To get started, clone the repository using, `$ git clone https://github.com/wa1ker38552/RoliPY` in shell.
+To get started, clone the repository using, `$ git clone https://github.com/wa1ker38552/RoliPY` in shell or use `pip install rolimons`
 
 # Documentaton
 The wrapper contains a class along with 2 subclasses to handle and organize data. These include Rolimons, Item, and User classes.
