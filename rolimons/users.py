@@ -32,7 +32,11 @@ class User:
     raw_data = requests.get('https://www.rolimons.com/itemapi/itemdetails').json()['items']
     request = requests.get(f'https://inventory.roblox.com/v1/users/{self.id}/assets/collectibles?limit=100').json()
     for item in request['data']:
-      rap += item['recentAveragePrice']
+      # check if item has None rap (Kleos or new limiteds)
+      if item['recentAveragePrice'] is None:
+        rap += 0
+      else:
+        rap += item['recentAveragePrice']
       inventory.append(rolimons.Item(item['assetId'], raw=raw_data))
       
     return value, rap, inventory, trade_ad_count
