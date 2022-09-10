@@ -1,6 +1,7 @@
 from requests_html import HTMLSession
 import rolimons
 import requests
+import json
 
 class User:
   def __init__(self, username=None, id=None):
@@ -32,7 +33,6 @@ class User:
     raw_data = requests.get('https://www.rolimons.com/itemapi/itemdetails').json()['items']
     request = requests.get(f'https://inventory.roblox.com/v1/users/{self.id}/assets/collectibles?limit=100').json()
     for item in request['data']:
-      # check if item has None rap (Kleos or new limiteds)
       if item['recentAveragePrice'] is None:
         rap += 0
       else:
@@ -40,3 +40,26 @@ class User:
       inventory.append(rolimons.Item(item['assetId'], raw=raw_data))
       
     return value, rap, inventory, trade_ad_count
+
+  def get_thumbnail(self):
+    request = requests.get(f'https://www.rolimons.com/thumbnailsapi/avatarbust?userIds={self.id}&size=150x150')
+    return request.json()['thumbnails'][str(self.id)]['url']
+
+  def get_inventory_timestamps(self):
+    request = requests.get(f'https://www.rolimons.com/history/{self.id}')
+    return json.loads(rolimons.get_index(request.text, 'var asset_snapshot_timestamps   = ', ';'))
+
+  def get_inventory_history(self, timestamp=None):
+    if timestamp is None:
+      request = requests.get(f'https://www.rolimons.com/history/{self.id}?')
+    else:
+      request = requests.get(f'https://www.rolimons.com/history/{self.id}?timestamp={timestamp}')
+
+    # manually parse
+    inventory = []
+    raw_inventory = json.loads(rolimons.get_index(request.text, 'var player_assets               = ', ';'))
+
+    for key in raw_inventory:
+      inventory.extend([key for i in range(len(raw_inventory[key]))])
+
+    return inventory
