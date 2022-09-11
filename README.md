@@ -88,6 +88,33 @@ user.rap
 > 10000
 > 10001
 
+`get_thumbnail` Returns Roblox headshot thumbnail <br/>
+Example:
+```py
+with open('image.png', 'wb') as file:
+  im = rolimons.User(username='Roblox').get_thumbnail()
+  file.write(requests.get(im).content)
+```
+`get_inventory_timestamps()` Fetches all saved timestamps of past inventory <br/>
+Example: 
+```py
+for timestamp in rolimons.User(name='Roblox').get_inventory_timestamps():
+  print(timestamp)
+```
+> `123456`
+> `...`
+
+`get_inventory_history(timestamp)` Fetches inventory history for a timestamp obtained from `get_inventory_timestamps()` <br/>
+Example:
+```py
+user = rolimons.User(name='roblox')
+timestamp = user.get_inventory_timestamps()[0]
+for item in user.get_inventory_history(timestamp):
+  print(item.name)
+```
+> `Classic Roblox Fedora`
+> `...`
+
 `query_user(username)` Searches Roblox to match username to an id <br/>
 Note: This function cannot be used on the client end.
 
