@@ -78,7 +78,7 @@ Functions defined: <br/> <br/>
 `get_metadata()` Refreshes all data for the specified user. This includes, rap, value, inventory, and trade_ads <br/>
 Example:
 ```py
-user = rolimons.User('Roblox')
+user = rolimons.User(username='Roblox')
 user.rap
 
 user.get_metadata()
@@ -163,7 +163,7 @@ Attributes: <br/><br/>
 `self.client` request.Session object with your Rolimons cookie in headers. Used for your own tests outside of class
 
 Functions defined: <br/><br/>
-`update_wishlist()`: Updates and overrides your Rolimons wishlist. Enter values in list format and returns request status code. <br/>
+`update_wishlist(wishlist)` Updates and overrides your Rolimons wishlist. Enter values in list format and returns request status code. <br/>
 Example:
 ```py
 client = rolimons.Client('token')
@@ -172,7 +172,7 @@ print(status_code)
 ```
 > `200`
 
-`update_asking()`: Updates and overrides your asking tags on Rolimons. A dictionary with the item id as key and list of tags as values will be required as parameter returns status code<br/>
+`update_asking({id: [tags]})` Updates and overrides your asking tags on Rolimons. A dictionary with the item id as key and list of tags as values will be required as parameter returns status code<br/>
 Example:
 ```py
 client = rolimons.Client('token')
@@ -181,7 +181,7 @@ print(status_code)
 ```
 > `200`
 
-`add_player`: Adds a player to Rolimons. The only parameter is username. Returns status code <br/>
+`add_player(username)` Adds a player to Rolimons. The only parameter is username. Returns status code <br/>
 Example:
 ```py
 client = discord.Client('token')
@@ -189,3 +189,5 @@ status_code = client.add_player('Roblox')
 print(status_code)
 ```
 > `200`
+
+`post_trade_ad(request, offering, id)`
