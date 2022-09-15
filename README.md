@@ -190,4 +190,9 @@ print(status_code)
 ```
 > `200`
 
-`post_trade_ad(request, offering, id)`
+`post_trade_ad(request, offering, id)`Posts a trade ad to Rolimons. Simply add the tag names in request and the client will automatically upload them with the trade ad. <br/>
+Example:
+```py
+client = discord.Client('token')
+client.post_trade_ad([12345, ...], [12345, 'adds', 'upgrade'], 1)
+```
