@@ -2,6 +2,9 @@ from rolimons.client import Client
 from rolimons.items import Item
 from rolimons.users import User
 
+# exceptions
+from rolimons.exceptions import VerificationError
+
 # core libraries
 import json
 import requests
