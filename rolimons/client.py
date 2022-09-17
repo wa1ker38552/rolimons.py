@@ -1,3 +1,4 @@
+import rolimons
 import requests
 
 class Client:
@@ -5,8 +6,10 @@ class Client:
     self.client = requests.Session()
     self.client.headers.update({'cookie': token})
 
-  def post_trade_ad(self, offering, request, id):
-    # require id since there is no way to find id from cookie
+    if self.post_trade_ad([1365767], ['adds'], 1, json=True)['code'] == 8:
+      raise rolimons.VerificationError('Unable to authenticate token')
+
+  def post_trade_ad(self, offering, request, id, json=False):
     request_ids, request_tags = [], []
     for item in request:
       try:
@@ -20,7 +23,9 @@ class Client:
       'request_tags': request_tags
     }
     request = self.client.post('https://www.rolimons.com/tradeapi/create', json=data)
-    return request.status_code
+
+    if json is True: return request.json()
+    else: return request.status_code
 
   def update_wishlist(self, items):
     if not isinstance(items, list): items = [items]
