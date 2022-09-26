@@ -106,3 +106,17 @@ def get_market_activity():
       'timestamp': item[0]
     })
   return data
+
+def deals():
+  raw_data = raw_data = requests.get('https://www.rolimons.com/itemapi/itemdetails').json()['items']
+  request = requests.get('https://www.rolimons.com/api/activity2').json()
+
+  data = []
+  for item in request['activities']:
+    data.append({
+      'item': Item(item[2], raw=raw_data),
+      'uuid': item[0],
+      'price': item[3]
+    })
+  return data
+  
