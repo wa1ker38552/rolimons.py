@@ -23,12 +23,15 @@ class Item:
     data = []
     raw1 = soup.find_all('div', attrs={'class': 'activity_links_section d-flex float-left'})
     raw2 = soup.find_all('div', attrs={'class': 'activity_stats_section d-flex justify-content-around'})
+    
     for i, item in enumerate(raw2):
-      dat = [x for x in item.get_text().split('\n') if x.strip()]
+      timestamp = BeautifulSoup(str(raw1[i]), 'html.parser').find('div', attrs={'class': 'activity_entry_timestamp my-auto'}).get_text()
+      search = BeautifulSoup(str(item), 'html.parser')
+      sales = [it.get_text() for it in search.find_all('div', attrs={'class': 'activity_stat_data'})]
       data.append({
-        'timestamp': raw1[i].get_text().split('\n')[1],
-        'price': dat[1],
-        'old_rap': dat[3],
-        'new_rap': dat[5]
+        'old_rap': sales[1],
+        'new_rap': sales[2],
+        'price': search.find('div', attrs={'class': 'pl-1'}).get_text(),
+        'timestamp': timestamp
       })
     return data
