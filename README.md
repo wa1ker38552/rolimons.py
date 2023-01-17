@@ -184,7 +184,7 @@ print(status_code)
 `add_player(username)` Adds a player to Rolimons. The only parameter is username. Returns status code <br/>
 Example:
 ```py
-client = discord.Client('token')
+client = rolimons.Client('token')
 status_code = client.add_player('Roblox')
 print(status_code)
 ```
@@ -193,6 +193,6 @@ print(status_code)
 `post_trade_ad(request, offering, id)`Posts a trade ad to Rolimons. Simply add the tag names in request and the client will automatically upload them with the trade ad. <br/>
 Example:
 ```py
-client = discord.Client('token')
+client = rolimons.Client('token')
 client.post_trade_ad([12345, ...], [12345, 'adds', 'upgrade'], 1)
 ```
