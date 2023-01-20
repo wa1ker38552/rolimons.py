@@ -26,7 +26,7 @@ class Client:
     request = self.client.post('https://www.rolimons.com/tradeapi/create', json=data)
 
     if json is True: return request.json()
-    else: return request.status_code
+    else: return request
 
   def update_wishlist(self, items, json=False):
     if not isinstance(items, list): items = [items]
@@ -34,7 +34,7 @@ class Client:
     request = self.client.post('https://www.rolimons.com/tradesettingsapi/updatewishlist', json=data)
     
     if json is True: return request.json()
-    else: return request.status_code
+    else: return request
 
   def update_asking(self, items, json=False):
     # format
@@ -48,10 +48,10 @@ class Client:
     request = self.client.post('https://www.rolimons.com/tradesettingsapi/updateaskinglist', json=data)
     
     if json is True: return request.json()
-    else: return request.status_code
+    else: return request
 
   def add_player(self, username, json=False):
     request = self.client.post(f'https://www.rolimons.com/playerapi/addplayer?playername={username}')
     
     if json is True: return request.json()
-    else: return request.status_code
+    else: return request
