@@ -158,35 +158,37 @@ The only parameter is your Rolimons cookie which should look something like `_ga
 client = rolimons.Client('cookie')
 ```
 
+Additionally, for each function, you can pass in the parameter, 'json=True' to return the response in a json format. Or you could just use `.json()` on the response returned by the function.
+
 Attributes: <br/><br/>
 `self.token` Rolimons cookie <br/>
 `self.client` request.Session object with your Rolimons cookie in headers. Used for your own tests outside of class
 
 Functions defined: <br/><br/>
-`update_wishlist(wishlist)` Updates and overrides your Rolimons wishlist. Enter values in list format and returns request status code. <br/>
+`update_wishlist(wishlist)` Updates and overrides your Rolimons wishlist. Enter values in list format and returns `request.response` or json if you pass in `json=True` <br/>
 Example:
 ```py
 client = rolimons.Client('token')
-status_code = client.update_wishlist([12345, 54321])
-print(status_code)
+request = client.update_wishlist([12345, 54321])
+print(request.status_code)
 ```
 > `200`
 
-`update_asking({id: [tags]})` Updates and overrides your asking tags on Rolimons. A dictionary with the item id as key and list of tags as values will be required as parameter returns status code<br/>
+`update_asking({id: [tags]})` Updates and overrides your asking tags on Rolimons. A dictionary with the item id as key and list of tags as values will be required as parameter returns `request.response` or json if you pass in `json=True`<br/>
 Example:
 ```py
 client = rolimons.Client('token')
-status_code = client.update_asking({12345: ['overpay', 'upgrades'], 54321': ['nft']})
-print(status_code)
+request = client.update_asking({12345: ['overpay', 'upgrades'], 54321': ['nft']})
+print(request.status_code)
 ```
 > `200`
 
-`add_player(username)` Adds a player to Rolimons. The only parameter is username. Returns status code <br/>
+`add_player(username)` Adds a player to Rolimons. The only parameter is username. Returns `request.response` or json if you pass in `json=True` <br/>
 Example:
 ```py
 client = rolimons.Client('token')
-status_code = client.add_player('Roblox')
-print(status_code)
+request = client.add_player('Roblox')
+print(request.status_code)
 ```
 > `200`
 
