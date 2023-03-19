@@ -1,6 +1,8 @@
 # rolimons.py
 A Python API wrapper for Rolimons.
 
+**Development moved to [rolimons](https://github.com/wa1ker38552/rolimons)**
+
 RoliPY is an API wrapper for Rolimons that includes several features that other wrappers for Rolimons don't include. The project is being actively maintained currently.
 
 **Getting Started** <br/>
