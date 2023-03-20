@@ -2,6 +2,6 @@ from .item import item
 from .utils import utils
 from .player import player
 
-from .errors import PlayerNotFound
-from .errors import RateLimitError
-from .errors import InvalidItemDetails
+from .exceptions import PlayerNotFound
+from .exceptions import RateLimitError
+from .exceptions import InvalidItemDetails
