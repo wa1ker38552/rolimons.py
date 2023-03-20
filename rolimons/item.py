@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from .errors import RateLimitError
-from .errors import InvalidItemDetails
+from .exceptions import RateLimitError
+from .exceptions import InvalidItemDetails
 
 
 class item:
