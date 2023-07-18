@@ -10,7 +10,7 @@ rolimons.py is an api wrapper for [rolimons](https://rolimons.com) It allows you
 ```py
 import rolimons
 
-player = rolimons.player(username='Roblox')
+player = rolimons.player(name='Roblox')
 print(player.rap, player.value)
 
 item = rolimons.item(1365767)
