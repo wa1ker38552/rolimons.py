@@ -36,7 +36,7 @@ class item:
         soup = BeautifulSoup(request.text, 'html.parser')
         tags = [tag.get_text() for tag in soup.find_all('h5', attrs={'class': 'card-title mb-1 text-light text-truncate stat-data'})]
         tags = [tags[3], tags[5], tags[11], tags[10], soup.find_all('div', attrs={'class': 'value-stat-data'})[0].get_text()]
-        return sales(tags)
+        return Sales(tags)
 
     def get_recent_sales(self):
         request = requests.get(f'https://www.rolimons.com/itemsales/{self.id}')
@@ -47,14 +47,14 @@ class item:
         for i, timestamp in enumerate(timestamps):
             sales_price = BeautifulSoup(str(meta[i]), 'html.parser').find_all('div', attrs={'class': 'pl-1'})[0].get_text()
             sales_rap_change = [tag.get_text().replace('\n', '') for tag in BeautifulSoup(str(meta[i]), 'html.parser').find_all('div', attrs={'class': 'activity_stat_data'})]
-            sales.append(sale([timestamp, sales_price, sales_rap_change[0], sales_rap_change[1]]))
+            sales.append(Sale([timestamp, sales_price, sales_rap_change[0], sales_rap_change[1]]))
         return sales
 
     def get_ownership_data(self):
         request = requests.get(f'https://www.rolimons.com/item/{self.id}')
         soup = BeautifulSoup(request.text, 'html.parser')
         tags = [tag.get_text() for tag in soup.find_all('div', attrs={'class': 'value-stat-data'})]
-        return owner(tags)
+        return Ownership(tags)
 
     def get_owner_data(self):
         def index_segment(start, end, data):
@@ -78,29 +78,29 @@ class ItemOwners:
     self.updated: list[int] = data['updated']
     self.owner_membership: list[int] = data['owner_bc_levels']
 
-    self.owners: list[dict] = [{'id': id, 'name': self.owner_names[i], 'uaid': self.uaids[i], 'updated': self.updated[i], 'is_premium': True if self.owner_membership[i] else False} for i, id in enumerate(self.owner_ids)]
+    self.owners: list[dict] = [Owner(self, i, id) for i, id in enumerate(self.owner_ids)]
 
   def get_premium_owners(self) -> list[dict]:
     return [self.owners[i] for i, o in enumerate(self.owner_membership) if o]
 
-class sales:
+class Sales:
     def __init__(self, data: list):
-        self.average_daily_sales: int = data[0]
-        self.rap_after_sale: int = data[1]
+        self.average_daily_sales: float = float(data[0])
+        self.rap_after_sale: int = int(data[1].replace(',' ,''))
         self.original_price: int = data[2]
         self.sellers: int = data[3]
-        self.best_price: int = data[4]
+        self.best_price: int = int(data[4].replace(',', ''))
 
 
-class sale:
+class Sale:
     def __init__(self, data: list):
-        self.timestamp: int = data[0]
-        self.sales_price: int = data[1]
-        self.old_rap: int = data[2]
-        self.new_rap: int = data[3]
+        self.timestamp: int = int(data[0])
+        self.sales_price: int = int(data[1].replace(',', ''))
+        self.old_rap: int = int(data[2].replace(',', ''))
+        self.new_rap: int = int(data[3].replace(',', ''))
 
 
-class owner:
+class Ownership:
     def __init__(self, data: dict):
         self.total_copies: int = data[0]
         self.avaliable_copies: int = data[1]
@@ -110,3 +110,11 @@ class owner:
         self.premium_owners: int = data[5]
         self.hoarded_copies: int = data[6]
         self.percent_hoarded: float = data[7].replace('%', '')
+
+class Owner:
+    def __init__(self, obj: ItemOwners, i: int, id: int):
+        self.id: int = id
+        self.name: str = obj.owner_names[i]
+        self.uaid: int = obj.uaids[i]
+        self.updated: int = int(obj.updated[i])
+        self.premium: bool = True if obj.owner_membership[i] else False
