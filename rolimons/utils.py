@@ -7,7 +7,7 @@ class utils:
         self.cli = requests.Session()
 
     def get_itemdetails(self):
-        return self.cli.get('https://www.rolimons.com/itemapi/itemdetails').json()
+        return self.cli.get('https://api.rolimons.com/items/v1/itemdetails').json()
 
     def get_leaderboard(self):
         request = self.cli.get('https://www.rolimons.com/leaderboard')
@@ -22,7 +22,7 @@ class utils:
         return players
 
     def get_recent_ads(self):
-        request = self.cli.get('https://rolimons.com/tradeadsapi/getrecentads').json()
+        request = self.cli.get('https://api.rolimons.com/tradeads/v1/getrecentads').json()
         ads = []
         if request['success']:
             for a in request['trade_ads']:
