@@ -11,7 +11,7 @@ class item:
 
     def __init__(self, id: int, itemdetails: dict = None):
         if itemdetails is None:
-            itemdetails = requests.get('https://www.rolimons.com/itemapi/itemdetails').json()
+            itemdetails = requests.get('https://api.rolimons.com/items/v1/itemdetails').json()
             if not itemdetails['success']:
                 raise RateLimitError('Rate limit exceeded for this itemdetails endpoint')
 
