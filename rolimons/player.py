@@ -12,7 +12,7 @@ class player:
             self.query_data(id)
         else:
             # fetch id from username
-            request = requests.get(f'https://www.rolimons.com/api/playersearch?searchstring={name}').json()
+            request = requests.get(f'https://api.rolimons.com/players/v1/playersearch?searchstring={name}').json()
             if request['players']:
                 found = False
                 for player in request['players']:
@@ -29,7 +29,7 @@ class player:
                 raise PlayerNotFound(f'Player {name} does not exist')
 
     def query_data(self, id):
-        request = requests.get(f'https://www.rolimons.com/playerapi/player/{id}').json()
+        request = requests.get(f'https://api.rolimons.com/players/v1/playerinfo/{id}').json()
         if request['success']:
             self.id: int = id
             self.name: str = request['name']
@@ -48,7 +48,7 @@ class player:
             raise PlayerNotFound(f'Player {id} does not exist')
 
     def refresh(self):
-        request = requests.get(f'https://www.rolimons.com/api/playerassets/{self.id}').json()
+        request = requests.get(f'https://api.rolimons.com/players/v1/playerassets/{self.id}').json()
         if request['success']:
             self.query_data(self.id)
         else:
