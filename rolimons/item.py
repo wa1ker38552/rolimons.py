@@ -18,10 +18,10 @@ class item:
         try:
             item = itemdetails['items'][str(id)]
             self.id: int = id
-            self.name: str = item[0]
+            self.name: str = item[0].strip()
             self.acronym: str = item[1] if item[1] != '' else None
             self.rap: int = item[2]
-            self.value: int = item[3] if item[3] != -1 else item[1]
+            self.value: int = item[3] if item[3] != -1 else item[2]
             self.default_value: int = item[4]
             self.demand: int = item[5] if item[5] != -1 else None
             self.trend: int = item[6] if item[6] != -1 else None
