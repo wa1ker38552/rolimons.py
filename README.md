@@ -23,3 +23,6 @@ for sale in sales:
 for player in rolimons.utils().get_leaderboard():
   print(player.name, player.value, player.rap)
 ```
+
+**Notes**
+- `rolimons.player.query_data()` only works with ipv4 addresses
